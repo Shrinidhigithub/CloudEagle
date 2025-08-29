@@ -14,7 +14,6 @@ public class DropboxBusinessApiApplication implements CommandLineRunner {
 	@Autowired
 	private DropboxClient dropboxClient;
 
-
 	// Replace with your Team Access Token
 	//private static final String ACCESS_TOKEN = "dropbox.access.token";
 
@@ -27,7 +26,7 @@ public class DropboxBusinessApiApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		// Instantiate RestTemplate here
-
+	try {
 		String accessToken = dropboxClient.getAccessToken();
 
 		if (accessToken == null || accessToken.isEmpty()) {
@@ -43,13 +42,12 @@ public class DropboxBusinessApiApplication implements CommandLineRunner {
 
 		HttpEntity<String> entity = new HttpEntity<>("null",headers);
 
-		try {
-			ResponseEntity<String> response = restTemplate.exchange(
+		ResponseEntity<String> response = restTemplate.exchange(
 					TEAM_INFO_URL,
 					HttpMethod.POST,
 					entity,
 					String.class
-			);
+		);
 
 			if (response.getStatusCode() == HttpStatus.OK) {
 				JSONObject jsonResponse = new JSONObject(response.getBody());
@@ -60,6 +58,7 @@ public class DropboxBusinessApiApplication implements CommandLineRunner {
 			}
 		} catch (Exception e) {
 			System.out.println("Error calling Dropbox API: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }
