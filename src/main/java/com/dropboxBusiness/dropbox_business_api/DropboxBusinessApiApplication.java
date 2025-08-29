@@ -58,7 +58,6 @@ public class DropboxBusinessApiApplication implements CommandLineRunner {
 			}
 		} catch (Exception e) {
 			System.out.println("Error calling Dropbox API: " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 }
